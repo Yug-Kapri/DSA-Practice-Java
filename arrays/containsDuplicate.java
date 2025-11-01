@@ -1,3 +1,6 @@
+// Time complexity: O(n)
+// Space complexity: O(n)
+  
 class Soluton {
   public boolean containsDuplicate(int[] nums) {
     // Create a HasSet to store elements from the array
