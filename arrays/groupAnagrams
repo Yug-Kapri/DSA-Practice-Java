@@ -1,0 +1,51 @@
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+
+        // If the input array is empty, return an empty list
+        if (strs.length == 0) {
+            return new ArrayList();
+        }
+
+        // Create a HashMap to group words by their letter frequency signature
+        // Key: a unique string representing letter counts (e.g., "#1#0#0#0#1#0...")
+        // Value: list of words (strings) that share the same signature (i.e., are anagrams)
+        Map<String, List> map = new HashMap<>();
+
+        // Array to store the count of each letter (26 lowercase English letters)
+        int count[] = new int[26];
+
+        // Loop through each word in the input array
+        for (String s : strs) {
+
+            // Reset the letter count array for the current word
+            Arrays.fill(count, 0);
+
+            // Count the frequency of each character in the current word
+            for (char c : s.toCharArray()) {
+                count[c - 'a']++;
+            }
+
+            // Build a unique key (signature) based on letter counts
+            // e.g., "eat" -> "#1#0#0#0#1#0#0#0#0#0#0#0#0#0#0#0#0#0#1..."
+            StringBuilder sb = new StringBuilder("");
+            for (int i = 0; i < 26; i++) {
+                sb.append("#");
+                sb.append(count[i]);
+            }
+
+            // Convert StringBuilder to String (key for HashMap)
+            String key = sb.toString();
+
+            // If the key is not present, create a new list for this anagram group
+            if (!map.containsKey(key)) {
+                map.put(key, new ArrayList());
+            }
+
+            // Add the current word to the corresponding anagram group
+            map.get(key).add(s);
+        }
+
+        // Return all grouped anagrams as a list of lists
+        return new ArrayList(map.values());
+    }
+}
